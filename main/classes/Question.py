@@ -20,8 +20,9 @@ class Question:
         self.question = question 
         self.qA = answers[0] 
         self.qB = answers[1] 
-        self.qC = answers[2] 
-        self.qD = answers[3] 
+        self.qC = answers[2]
+        if answers[3] != 0:
+            self.qD = answers[3]
         self.good = good 
         
     def __str__(self):

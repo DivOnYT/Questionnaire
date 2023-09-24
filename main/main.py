@@ -6,7 +6,6 @@ from classes.Question import Question
         if char == ligne[index:index+len(char)]:
             print(ligne[:index])
             return(index, char)
-
 """
 
 def search_char(list_char, ligne: str, mainList=None):
@@ -42,28 +41,31 @@ rep = ("Qui est le chef du nouveau gouvernement en France en 1936 ?", "Thorez", 
 
 def doList(char_searched: list):
     qList = []  # Notre Pile de questions
-    with open('./misc/fichier_questions_2.txt', 'r') as fichier:
-        for ligne in fichier:
-            q = search_char(char_searched, ligne)
-            for x in q:
-                for y in char_searched:
-                    try:
-                        if x[:len(y)] == y:
-                            q[q.index(x)] = x[len(y):]
-                    except:
-                        pass
+    f = open('./misc/fichier_questions_2.txt', 'r')
+    fichier = f.readlines()
+    print(fichier)
+    for ligne in fichier:
+        q = search_char(char_searched, ligne)
+        for x in q:
+            for y in char_searched:
+                try:
+                    if x[:len(y)] == y:
+                        q[q.index(x)] = x[len(y):]
+                except:
+                    pass
 
-            if len(q) == 6:
-                qList.append(Question(q[0], (q[1], q[2], q[3], q[4]), q[5]))
-            elif len(q) == 5:
-                qList.append(Question(q[0], (q[1], q[2], q[3], 0), q[4]))
+        if len(q) == 6: # Empilement des questions pour les questions avec 4 propo
+            qList.append(Question(q[0], (q[1], q[2], q[3], q[4]), q[5]))
+        elif len(q) == 5: # pour les questions a 3 propos
+            qList.append(Question(q[0], (q[1], q[2], q[3], 0), q[4]))
+
+    return qList
 
 
 run = True
 while run:
     liste = doList(["A-", "B-", "C-", "D-", "[", "]"])
     q = Questionnaire(liste, 20)
-    print(q)
     q.game()
 
     answer = input("Voulez vous recommencer un questionnaire ?? O/N \n >>>")

@@ -23,11 +23,11 @@ class Questionnaire:
         Fonction qui permet de savoir si la liste de questions est vide
         """
         
-        
+    def depiler(self):
+        return self.questionList.pop(0)
+
     def __str__(self):
         return("salut")
     
     def game(self):
-        pass        
-        
-        
+        pass

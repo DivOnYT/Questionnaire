@@ -1,16 +1,22 @@
 from classes.Questionnaire import Questionnaire
 from classes.Question import Question
+import random
 
-"""def search_Char(char: str, ligne: str):
-    for index, x in enumerate(ligne):
-        if char == ligne[index:index+len(char)]:
-            print(ligne[:index])
-            return(index, char)
-"""
+banner = r"""
+ ________  ________  _____ ______   ________  ___  __    _______   ________     
+|\   __  \|\   ____\|\   _ \  _   \|\   __  \|\  \|\  \ |\  ___ \ |\   __  \    
+\ \  \|\  \ \  \___|\ \  \\\__\ \  \ \  \|\  \ \  \/  /|\ \   __/|\ \  \|\  \   
+ \ \  \\\  \ \  \    \ \  \\|__| \  \ \   __  \ \   ___  \ \  \_|/_\ \   _  _\  
+  \ \  \\\  \ \  \____\ \  \    \ \  \ \  \ \  \ \  \\ \  \ \  \_|\ \ \  \\  \| 
+   \ \_____  \ \_______\ \__\    \ \__\ \__\ \__\ \__\\ \__\ \_______\ \__\\ _\ 
+    \|___| \__\|_______|\|__|     \|__|\|__|\|__|\|__| \|__|\|_______|\|__|\|__|
+          \|__|                                              by Illian & Côme  """
+
+
 
 def search_char(list_char, ligne: str, mainList=None):
     """
-
+    Fonction permettant de faire une liste avec la ligne de question
     :param list_char: la liste des caractères a reécuperer
     :param ligne: la ligne sur laquelle le programme travaille
     :param count: le nombre
@@ -20,37 +26,39 @@ def search_char(list_char, ligne: str, mainList=None):
     if mainList is None:
         mainList = []
 
-    charlist = list_char
+    charlist = list_char # pour ne pas modifier la liste accidentellement
 
     if charlist == []:
         return mainList
 
-    elif list_char[0] not in ligne:
-        mainList = search_char(charlist[1:], ligne, mainList)
-        return mainList
+    elif list_char[0] not in ligne: # si le symbole n'est pas dans ce qu'il reste de la ligne on passe exemple le D dans une ligne a seulement 3 questions
+        mainList = search_char(charlist[1:], ligne, mainList) # on cherche la prochaine reponse
+        return mainList # on retourne le mainList sans y toucher
     else:
-        for index, x in enumerate(ligne):
-            if charlist[0] == ligne[index:index + len(charlist[0])]:
-                mainList.append(ligne[:index])
-                mainList = search_char(charlist[1:], ligne[index:], mainList)
-                return mainList
-
-
-rep = ("Qui est le chef du nouveau gouvernement en France en 1936 ?", "Thorez", "Blum", "Daladier", "Petain", "Blum")
+        for index, x in enumerate(ligne): # pour chaque caractère de la ligne
+            if charlist[0] == ligne[index:index + len(charlist[0])]: # si le symbole A est le caractère x par ex et que après il y a un - donc A- a la suite
+                mainList.append(ligne[:index]) # on ajoute l'avant de la ligne
+                mainList = search_char(charlist[1:], ligne[index:], mainList) # recursivité
+                return mainList # on renvoie la liste finie
 
 
 def doList(char_searched: list):
+    """
+    Fonction permettant de faire la liste
+    :param char_searched:  ["A-", "B-", "C-", "D-", "[", "]"]
+    :return:
+    """
     qList = []  # Notre Pile de questions
-    f = open('./misc/fichier_questions_2.txt', 'r')
-    fichier = f.readlines()
-    print(fichier)
-    for ligne in fichier:
-        q = search_char(char_searched, ligne)
-        for x in q:
-            for y in char_searched:
-                try:
-                    if x[:len(y)] == y:
-                        q[q.index(x)] = x[len(y):]
+    f = open('./misc/fichier_questions_2.txt', 'r') # ouverture du fichier"
+    fichier = f.readlines() # lecture des lignes et renvoie sous une forme []
+    random.shuffle(fichier) # on melange les questions
+    for ligne in fichier: # pour chaque ligne du fichier (question)
+        q = search_char(char_searched, ligne) # on recupere la liste finie
+        for x in q: # on parcourt les donnees de chaque question
+            for y in char_searched: # si il y a toujours le caractère A- dans la ligne
+                try: # on teste
+                    if x[:len(y)] == y: # si A- est toujours la
+                        q[q.index(x)] = x[len(y):] # one le supprime
                 except:
                     pass
 
@@ -64,11 +72,18 @@ def doList(char_searched: list):
 
 run = True
 while run:
-    liste = doList(["A-", "B-", "C-", "D-", "[", "]"])
-    q = Questionnaire(liste, 20)
-    q.game()
+    liste = doList(["A-", "B-", "C-", "D-", "[", "]"]) # on recupere la liste de questions
+    q = Questionnaire(liste, 0) # on cree un nouveau Questionnaire
+    print(banner) # on affiche la bannière de l'application
+    q.rules() # on affiche les règles
+    input('Appuyez sur une entrée pour commencer le QCM ...') # on mets un input pour faire lire les règles au joueur
+    q.game() # on lance le jeu
 
-    answer = input("Voulez vous recommencer un questionnaire ?? O/N \n >>>")
-    if answer.upper() in ["N", "NO", "NON", "NOPE"]:
-        run = False
-        print("Merci beaucoup et à une prochaine fois .")
+    while 1: # a la fin du jeu
+        answer = input("Voulez vous recommencer un questionnaire ?? O/N \n >>>")
+        if answer.upper() in ["N", "NO", "NON", "NOPE"]: # le joueur veut quitter
+            run = False # on mets a false la condition principale du jeu
+            print("Merci beaucoup et à une prochaine fois .") # on remercie le joueur
+            break # on casse la boucle active
+        elif answer.upper() in ["Y", "O", "Oui", "OUI", "YES", "YEAH", "yeah", "yes"]: # si le joueur veut rejouer
+            break # on casse la boucle active

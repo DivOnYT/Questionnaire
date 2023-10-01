@@ -1,7 +1,4 @@
 
-
-f = open('fichier_questions_2.txt', "w", encoding='Utf-8')
-
 banner = r""" 
  ________  ________  _____ ______   ________  ___  __    _______   ________     
 |\   __  \|\   ____\|\   _ \  _   \|\   __  \|\  \|\  \ |\  ___ \ |\   __  \    
@@ -12,7 +9,23 @@ banner = r"""
     \|___| \__\|_______|\|__|     \|__|\|__|\|__|\|__| \|__|\|_______|\|__|\|__|
           \|__|                                              by Ilian & Côme  """
 
-def addQuestion(path): # fonction qui ajoute la question les réponses et les propositions 
+
+def save_question(path: str, listaddAll: tuple):
+    letters = "ABCD"
+    f = open(path, "r", encoding='Utf-8')
+    read = f.read()
+    f.close()
+    myQuestion = listaddAll[0] + " ? "
+    for indx, x in enumerate(listaddAll[1]):
+        myQuestion = myQuestion + letters[indx] + "- " + str(x) + " "
+    myQuestion = myQuestion + " [" + listaddAll[2] + "];"
+    read = read+"\n"+myQuestion
+    f = open(path, "w+", encoding="Utf-8")
+    f.write(read)
+    f.close()
+
+
+def addQuestion(path): # fonction qui ajoute la question les réponses et les propositions
     listaddP = []
     listaddQ = []
     listaddB = []
@@ -39,8 +52,10 @@ def addQuestion(path): # fonction qui ajoute la question les réponses et les pr
     print('donc vous avez comme liste de question : ',listaddQ)
     print('donc vous avez comme liste de propositions : ',listaddP)
     print('donc vous avez comme liste de bonne Réponse : ',listaddB)
-        
-    return listaddP + listaddQ + listaddB
+
+    question = (listaddQ[0], listaddP, listaddB[0])
+
+    save_question(path, question)
 
     
     
@@ -53,7 +68,7 @@ while running:
 
     x = str(input('vous-voulez ajouter une question o-n ? '))
     if x == 'o' : 
-        addQuestion(f)
+        addQuestion('./misc/fichier_questions_2.txt')
         
     else : 
         running = False 

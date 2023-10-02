@@ -21,10 +21,7 @@ class Question:
         self.qA = answers[0] 
         self.qB = answers[1] if (answers[1] != 0) else 0
         self.qC = answers[2]
-        if answers[3] != 0:
-            self.qD = answers[3]
-        else:
-            self.qD = 0
+        self.qD = answers[3]
         self.good = good
 
     def isGood(self, reponse):
@@ -45,6 +42,10 @@ class Question:
         return self.good
 
     def numberProps(self):
+        """
+        Methode permettant de retourner le nombre de propositions enregistrées
+        :return:
+        """
         count = 0
         if self.qA != 0:
             count+=1

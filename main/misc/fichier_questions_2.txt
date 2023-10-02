@@ -18,3 +18,4 @@ Completez cette suite logique : Windows 7, Windows 8, Windows??? A-Windows 9 B-W
 Qu est ce que le Raspberry Pi ? A- un micro-ordinateur B- un hoverboard C- une patisserie D-Un nouveau type de connexion (type Bluetooth) [A];
 Qu est-ce qu une barrette RAM dans un ordinateur ? A- Ce qui permet l affichage du PC B- Ce qui permet le stockage du PC C-Ce qui permet la fluidite du PC D- Ce qui permet la vitesse de calcul [C];
 Ctrl + Z A- Hein ? B- Copier/Coller C- Retour arriere D- Repeter [C];
+ques ? A- p1 B- p2  [A];

@@ -39,7 +39,7 @@ def addQuestion(path): # fonction qui ajoute la question les réponses et les pr
 
         
         while count < 4 and quitté_repadd != True  : # tant que la liste prop n'a 
-            prop = str(input('quel est la propostition PS : vous êtes obligé d\'avoir au moins deux propositions ? Q=quitter ')) # demande des propositions après avoir demander la question 
+            prop = str(input('quel est la propostition PS : vous êtes obligé d\'avoir au moins trois propositions ? Q=quitter ')) # demande des propositions après avoir demander la question
             if prop == 'Q' or prop == 'q' and count <= 3 : # si l'utilisateur veux quitté la demande de proposistions 
                 quitté_repadd = True 
             else : 
@@ -58,17 +58,3 @@ def addQuestion(path): # fonction qui ajoute la question les réponses et les pr
 
     save_question(path, question) # ajoute la question au fichier texte avec la fonction précédente 
 
-    
-print(banner)
-running = True
-while running: # condition pour faire tourner le programme
-
-    print("Logiciel additionnel a QCM Maker pour ajouter des questions au Fichier de QCM")
-
-    x = str(input('vous-voulez ajouter une question o-n ? ')) # première demande a l'utilisateur si il veut ajouter une question ou non 
-    if x == 'o' : 
-        addQuestion('./misc/fichier_questions_2.txt') # appel la fonction d
-    else : 
-        running = False # sort de la condition de base pour le programme de base 
-
-print(('merci et bonne journee n\'hesitez pas a revenir ! '))

@@ -19,10 +19,12 @@ class Question:
         """
         self.question = question 
         self.qA = answers[0] 
-        self.qB = answers[1] 
+        self.qB = answers[1] if (answers[1] != 0) else 0
         self.qC = answers[2]
         if answers[3] != 0:
             self.qD = answers[3]
+        else:
+            self.qD = 0
         self.good = good
 
     def isGood(self, reponse):
@@ -42,6 +44,17 @@ class Question:
         """
         return self.good
 
+    def numberProps(self):
+        count = 0
+        if self.qA != 0:
+            count+=1
+        if self.qB != 0:
+            count +=1
+        if self.qC != 0:
+            count +=1
+        if self.qD != 0:
+            count +=1
+        return count
         
     def __str__(self):
         """
@@ -59,7 +72,6 @@ class Question:
         B - {self.qB}
         C - {self.qC}
         """
-        try:
+        if self.qD != 0:
             presentation=presentation+f"D - {self.qD}"
-        except:pass
         return presentation

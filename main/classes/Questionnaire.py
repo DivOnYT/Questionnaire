@@ -96,6 +96,7 @@ class Questionnaire:
         Methode permettant le lancement du jeu
         :return:
         """
+        letters = "ABCD"
         wrong = True
         length = self.questionsLen()
         while not self.isEmpty():
@@ -103,16 +104,20 @@ class Questionnaire:
                 question = self.depiler()
                 print(question)
             response = input("Quelle est la réponse ?  >>> ")
-            if response.upper() in ["A", "B", "C", "D"]:
+            if response.upper() in letters[:question.numberProps()]:
                 wrong = True
                 if question.isGood(response):
                     self.bonneRep()
+
                 else:
                     self.mauvRep()
                     print(f'La Bonne réponse était {question.getBonneRep()}')
+
                 print(f"Ton Score est de {self.score}")
             else:
                 print(f"La réponse {response} n'est pas proposée ...")
                 wrong = False
-
-        print(f'Ton score final est de {round(float((self.score / (length*self.bonus)) * 20), 2)}/20. Bravo !!')
+        try:
+            print(f'Ton score final est de {round(float((self.score / (length*self.bonus)) * 20), 2)}/20. Bravo !!')
+        except:
+            print("Tu n'as pas de questions dans le fichier texte")

@@ -1,6 +1,7 @@
 from classes.Questionnaire import Questionnaire
 from classes.Question import Question
 import random
+from Bonus import *
 
 banner = r"""
  ________  ________  _____ ______   ________  ___  __    _______   ________     
@@ -74,16 +75,40 @@ run = True
 while run:
     liste = doList(["A-", "B-", "C-", "D-", "[", "]"]) # on recupere la liste de questions
     q = Questionnaire(liste, 0) # on cree un nouveau Questionnaire
-    print(banner) # on affiche la bannière de l'application
-    q.rules() # on affiche les règles
-    input('Appuyez sur une entrée pour commencer le QCM ...') # on mets un input pour faire lire les règles au joueur
-    q.game() # on lance le jeu
+    print(banner)  # on affiche la bannière de l'application
+    your_choice = input("Que voulez vous faire ?\n 1) Faire un QCM \n 2) Lire les règles \n 3) Ajouter une question au QCM \n >>>")
+    if your_choice == "1":
+        q.game()  # on lance le jeu
+        while 1:  # a la fin du jeu
+            answer = input("Voulez vous recommencer un questionnaire ?? O/N \n >>>")
+            if answer.upper() in ["N", "NO", "NON", "NOPE"]:  # le joueur veut quitter
+                run = False  # on mets a false la condition principale du jeu
+                print("Merci beaucoup et à une prochaine fois .")  # on remercie le joueur
+                break  # on casse la boucle active
+            elif answer.upper() in ["Y", "O", "Oui", "OUI", "YES", "YEAH", "yeah", "yes"]:  # si le joueur veut rejouer
+                break  # on casse la boucle active
 
-    while 1: # a la fin du jeu
-        answer = input("Voulez vous recommencer un questionnaire ?? O/N \n >>>")
-        if answer.upper() in ["N", "NO", "NON", "NOPE"]: # le joueur veut quitter
-            run = False # on mets a false la condition principale du jeu
-            print("Merci beaucoup et à une prochaine fois .") # on remercie le joueur
-            break # on casse la boucle active
-        elif answer.upper() in ["Y", "O", "Oui", "OUI", "YES", "YEAH", "yeah", "yes"]: # si le joueur veut rejouer
-            break # on casse la boucle active
+    elif your_choice == "2":
+        q.rules() # on affiche les règles
+        input("Appuyez sur entrée pour quitter les règles ...")
+
+    elif your_choice == "3":
+        print(banner)
+        running = True
+        while running:  # condition pour faire tourner le programme
+
+            print("Logiciel additionnel a QCM Maker pour ajouter des questions au Fichier de QCM")
+
+            x = str(input(
+                'vous-voulez ajouter une question o-n ? '))  # première demande a l'utilisateur si il veut ajouter une question ou non
+            if x == 'o':
+                addQuestion('./misc/fichier_questions_2.txt')  # appel la fonction d
+            else:
+                running = False  # sort de la condition de base pour le programme de base
+
+        print(('merci et bonne journee n\'hesitez pas a revenir ! '))
+
+    else:
+        print("Ce choix n'est pas proposé")
+
+

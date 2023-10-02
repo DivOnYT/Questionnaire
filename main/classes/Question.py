@@ -19,7 +19,7 @@ class Question:
         """
         self.question = question 
         self.qA = answers[0] 
-        self.qB = answers[1] if (answers[1] != 0) else 0
+        self.qB = answers[1]
         self.qC = answers[2]
         self.qD = answers[3]
         self.good = good

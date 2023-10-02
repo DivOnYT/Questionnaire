@@ -20,9 +20,9 @@ def save_question(path: str, listaddAll: tuple):
     for indx, x in enumerate(listaddAll[1]): # x parcours la liste des propositions ou prend la valeur de chaque index 
         myQuestion = myQuestion + letters[indx] + "- " + str(x) + " " # formation de la question avec ses propositions 
     myQuestion = myQuestion + " [" + listaddAll[2] + "];" # reprise de la bonne réponse 
-    read = read+"\n"+myQuestion # lecture de la question finale 
+    read = read+"\n"+myQuestion # ajout de la question finale 
     f = open(path, "w+", encoding="Utf-8") # ouverture du fichier texte 
-    f.write(read) # ecriture dans le fichier texte 
+    f.write(read) # ecrase les données du fichier précédente par les nouvelles 
     f.close() # fermeture du fichier texte 
 
 
